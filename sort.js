@@ -63,3 +63,34 @@ function merge(left, right, array){
 
     return array
 }
+
+/*********************************************** Quicksort ***********************************************/
+//Divide and conquer approach, paritition into two halves around a pivot value and recursively sort the values until the length of the halves are 0 or 1
+
+function quickSort(array, start = 0, end = array.length){
+    if(start >= 0) {
+        return array
+    }
+
+    const middle = partition(array, start, end)
+    array = quickSort(array, start, middle)
+    array = quickSort(array, middle + 1, end)
+    return array
+}
+
+//there are various partitioning algorithms, the one below is Lomuto's algorithm 
+function partition(array, start, end){
+    const pivot = array[end -1] //pivot is final value in the array and you loop through the array placeing value on either side of the pivot point
+    let j = start
+    for (let i = start; i < end -1 ; i++){
+        if(array[i] <= pivot) {
+            swap(array, i, j)
+            j++
+        }
+    }
+    swap(array, end -1 , j)
+    return j
+}
+
+//Although in the worst case the time complexity is O(n^2) and O(nlog(n)) in best and average cases this is used and preferred to the merge sort
+// more cache efficient and can be easily performed in place wihtout any additional memory allocation
